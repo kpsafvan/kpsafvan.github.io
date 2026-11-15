@@ -1,6 +1,6 @@
 # kpsafvan.github.io
 
-Official personal landing page and product showcase for **Muhammed Safvan KP** ([kpsafvan.in](https://kpsafvan.in)).
+Official personal landing page and product showcase for **K P Safvan** ([kpsafvan.in](https://kpsafvan.in)).
 
 ## 🚀 Features
 
