@@ -1,5 +1,907 @@
-<!doctype html>
-<html>
-  <head><title>My site</title></head>
-  <body><h1>Welcome</h1></body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safvan KP | Products & Projects</title>
+  <meta name="description" content="Personal product portfolio of Muhammed Safvan KP - Software Engineer & Product Builder.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090d16;
+      --bg-surface: #0f172a;
+      --bg-surface-elevated: #162033;
+      --bg-surface-card: rgba(18, 26, 43, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.45);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-glow: rgba(99, 102, 241, 0.3);
+      --accent: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.25);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.3);
+      --warning: #f59e0b;
+      --warning-glow: rgba(245, 158, 11, 0.2);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Ambient dynamic glows */
+    .ambient-glow {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-glow::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      left: 10%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      filter: blur(100px);
+      border-radius: 50%;
+    }
+
+    .ambient-glow::after {
+      content: '';
+      position: absolute;
+      top: 250px;
+      right: 10%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      filter: blur(100px);
+      border-radius: 50%;
+    }
+
+    /* Background dot-grid */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse at 50% 30%, black 50%, transparent 85%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 50%, transparent 85%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main Container */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    /* Hero / Header */
+    .hero {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 30px var(--primary-glow);
+      background: var(--bg-surface-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      position: relative;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      background: var(--success);
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.85; }
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin-bottom: 1.75rem;
+      font-weight: 400;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 1.15rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+    }
+
+    .social-btn:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .social-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Section Header & Controls */
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .filter-pills {
+      display: inline-flex;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border);
+      padding: 0.3rem;
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(12px);
+    }
+
+    .filter-btn {
+      padding: 0.45rem 1.15rem;
+      border-radius: var(--radius-full);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 12px var(--primary-glow);
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+      max-width: 300px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 2.4rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+      backdrop-filter: blur(12px);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    /* Tiles Grid */
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Product Tile / Card */
+    .product-tile {
+      background: var(--bg-surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .product-tile:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.65), 0 0 25px var(--primary-glow);
+    }
+
+    /* Featured Tile Accent */
+    .product-tile.is-featured {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.06) 0%, rgba(18, 26, 43, 0.85) 100%);
+      box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5), 0 0 25px rgba(16, 185, 129, 0.15);
+    }
+
+    .product-tile.is-featured:hover {
+      border-color: rgba(16, 185, 129, 0.6);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.25);
+    }
+
+    .product-tile::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .product-tile.is-featured::before {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+      opacity: 1;
+    }
+
+    .product-tile:hover::before {
+      opacity: 1;
+    }
+
+    .tile-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .tile-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-light);
+      transition: var(--transition);
+    }
+
+    .product-tile.is-featured .tile-icon-box {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    .product-tile:hover .tile-icon-box {
+      transform: scale(1.08);
+    }
+
+    .tile-icon-box svg {
+      width: 26px;
+      height: 26px;
+      stroke-width: 2;
+    }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.725rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .status-badge.live {
+      background: rgba(16, 185, 129, 0.14);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .status-badge.live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .status-badge.dev {
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .status-badge.upcoming {
+      background: rgba(148, 163, 184, 0.1);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .tile-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .tile-description {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      flex: 1;
+      line-height: 1.6;
+    }
+
+    .tile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tile-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Buttons / Tile Actions */
+    .tile-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: auto;
+    }
+
+    .tile-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.15rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .tile-btn-live {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+    }
+
+    .tile-btn-live:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 6px 22px rgba(16, 185, 129, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .tile-btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .tile-btn-primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .tile-btn-ghost {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      cursor: default;
+    }
+
+    .tile-btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      flex: 0 0 auto;
+      padding: 0.75rem 0.9rem;
+    }
+
+    .tile-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .tile-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.2;
+    }
+
+    /* Add / Contact Tile */
+    .contact-tile {
+      border: 2px dashed rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2.5rem 1.75rem;
+    }
+
+    .contact-tile:hover {
+      border-color: var(--primary-light);
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3.5rem 1rem;
+      color: var(--text-dim);
+      font-size: 1rem;
+      display: none;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.875rem;
+      position: relative;
+      z-index: 1;
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--primary-light);
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2.1rem;
+      }
+      .container {
+        padding: 2rem 1rem 3rem;
+      }
+      .tiles-grid {
+        grid-template-columns: 1fr;
+      }
+      .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-wrap {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+  <div class="bg-grid"></div>
+
+  <div class="container">
+    <!-- Hero / Profile -->
+    <header class="hero">
+      <div class="avatar-wrapper">
+        <div class="avatar" id="avatarBox">
+          <img src="https://github.com/safvansafvan.png" alt="Safvan KP" onerror="this.style.display='none'; document.getElementById('avatarText').style.display='block';" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+          <span id="avatarText" style="display:none;">SK</span>
+        </div>
+        <div class="avatar-badge" title="Active & Open for Innovations"></div>
+      </div>
+
+      <h1 class="hero-title">Muhammed Safvan KP</h1>
+      <p class="hero-tagline">
+        Software Engineer & Product Builder. Crafting intelligent transit analytics, spatial planning architectures, and high-performance applications.
+      </p>
+
+      <div class="social-links">
+        <a href="https://github.com/safvansafvan" target="_blank" rel="noopener noreferrer" class="social-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/kpsafvan" target="_blank" rel="noopener noreferrer" class="social-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:safvan@kpsafvan.in" class="social-btn">
+          <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg>
+          Contact
+        </a>
+      </div>
+    </header>
+
+    <!-- Section Header & Controls -->
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-label">Portfolio & Deployments</div>
+        <h2 class="section-title">Products & Projects</h2>
+      </div>
+
+      <div class="controls-bar">
+        <div class="filter-pills" id="filterPills">
+          <button class="filter-btn active" data-filter="all">All Products</button>
+          <button class="filter-btn" data-filter="live">Live (1)</button>
+          <button class="filter-btn" data-filter="in-dev">In Development</button>
+        </div>
+
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by name, tech...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Tiles Grid -->
+    <main class="tiles-grid" id="productsGrid">
+      <!-- Injected dynamically by JavaScript below -->
+    </main>
+
+    <div class="no-results" id="noResults">
+      <p>No products match your current filter.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; <span id="currentYear"></span> <strong>Muhammed Safvan KP</strong> &bull; <a href="https://kpsafvan.in">kpsafvan.in</a></p>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // PRODUCT REPOSITORY & CATALOG CONFIGURATION
+    // Currently "Kerala Stats" is hosted as the live product.
+    // Update links, add or modify products below directly!
+    // =========================================================================
+    const productsData = [
+      {
+        id: "kerala-stats",
+        title: "KSRTC Kerala Transit Analytics",
+        description: "Interactive transit network visualization and regional mobility intelligence platform modeling scheduled bus operations, intermediate highway geometry, and district flow dynamics across Kerala & South India.",
+        status: "live",
+        statusLabel: "Live Product",
+        featured: true,
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="15" rx="3"></rect><path d="M4 11h16"></path><circle cx="7.5" cy="14.5" r="1.5"></circle><circle cx="16.5" cy="14.5" r="1.5"></circle><path d="M6 18v2"></path><path d="M18 18v2"></path></svg>`,
+        tags: ["Vue 3", "Leaflet", "TypeScript", "Vite", "Pinia"],
+        // Live URL for Kerala Stats:
+        primaryUrl: "https://kpsafvan.github.io/kerala-stats/", 
+        primaryLabel: "Launch App",
+        githubUrl: "https://github.com/safvansafvan/kerala-stats"
+      },
+      {
+        id: "floor-plan",
+        title: "FloorPlan Studio",
+        description: "Architectural floor planning and 2D spatial layout management suite designed for rapid interior drafting and structural space modeling.",
+        status: "in-dev",
+        statusLabel: "In Development",
+        featured: false,
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>`,
+        tags: ["Python", "Django", "Spatial Layout"],
+        primaryUrl: "#",
+        primaryLabel: "Coming Soon",
+        githubUrl: "https://github.com/safvansafvan"
+      },
+      {
+        id: "school-collage",
+        title: "Class Photo Archive",
+        description: "High-resolution academic class photo archiving, batch memory preservation, and structured directory platform for alumni networks.",
+        status: "in-dev",
+        statusLabel: "In Development",
+        featured: false,
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>`,
+        tags: ["React", "Node.js", "Full Stack", "Archive"],
+        primaryUrl: "#",
+        primaryLabel: "Coming Soon",
+        githubUrl: "https://github.com/safvansafvan"
+      },
+      {
+        id: "wallet-app",
+        title: "Smart Finance & Wallet",
+        description: "Personal expense tracking and finance management solution built with Flutter to monitor cashflow, budget allocations, and spending health.",
+        status: "in-dev",
+        statusLabel: "In Development",
+        featured: false,
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>`,
+        tags: ["Flutter", "Dart", "Finance", "Mobile"],
+        primaryUrl: "https://github.com/safvansafvan",
+        primaryLabel: "View Code",
+        githubUrl: "https://github.com/safvansafvan"
+      }
+    ];
+
+    // =========================================================================
+    // DYNAMIC RENDERING & INTERACTION LOGIC
+    // =========================================================================
+    const productsGrid = document.getElementById('productsGrid');
+    const filterPills = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('searchInput');
+    const noResults = document.getElementById('noResults');
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function renderProducts() {
+      const filtered = productsData.filter(product => {
+        const matchesFilter = (currentFilter === 'all' || product.status === currentFilter);
+        const searchTarget = (product.title + ' ' + product.description + ' ' + product.tags.join(' ')).toLowerCase();
+        const matchesSearch = searchTarget.includes(searchQuery.toLowerCase());
+        return matchesFilter && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        productsGrid.innerHTML = '';
+        noResults.style.display = 'block';
+        return;
+      }
+
+      noResults.style.display = 'none';
+
+      let tilesHTML = filtered.map(product => {
+        const isLive = product.status === 'live';
+        const badgeClass = isLive ? 'live' : 'dev';
+        const buttonClass = isLive ? 'tile-btn-live' : (product.primaryUrl !== '#' ? 'tile-btn-primary' : 'tile-btn-ghost');
+        const primaryTarget = product.primaryUrl !== '#' ? 'target="_blank" rel="noopener noreferrer"' : '';
+
+        return `
+          <article class="product-tile ${product.featured ? 'is-featured' : ''}" data-id="${product.id}">
+            <div class="tile-header">
+              <div class="tile-icon-box">
+                ${product.icon}
+              </div>
+              <span class="status-badge ${badgeClass}">${product.statusLabel}</span>
+            </div>
+
+            <h3 class="tile-title">${product.title}</h3>
+            <p class="tile-description">${product.description}</p>
+
+            <div class="tile-tags">
+              ${product.tags.map(tag => `<span class="tile-tag">${tag}</span>`).join('')}
+            </div>
+
+            <div class="tile-actions">
+              <a href="${product.primaryUrl}" ${primaryTarget} class="tile-btn ${buttonClass}">
+                ${product.primaryLabel}
+                ${isLive || product.primaryUrl !== '#' ? `
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M7 17l9.2-9.2M17 17V8H8"></path>
+                  </svg>
+                ` : ''}
+              </a>
+              ${product.githubUrl ? `
+                <a href="${product.githubUrl}" target="_blank" rel="noopener noreferrer" class="tile-btn tile-btn-secondary" title="View Source on GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                </a>
+              ` : ''}
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      // Add a clean "Contact / Pipeline" tile at the end when viewing all
+      if (currentFilter === 'all' && !searchQuery) {
+        tilesHTML += `
+          <div class="product-tile contact-tile">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+            </div>
+            <h3 class="tile-title" style="font-size:1.15rem; margin-bottom:0.35rem;">More in the Pipeline</h3>
+            <p class="tile-description" style="font-size:0.85rem; margin-bottom:1rem;">Have an idea or want to collaborate on new tools?</p>
+            <a href="mailto:safvan@kpsafvan.in" class="tile-btn tile-btn-secondary" style="width:auto; padding:0.6rem 1.25rem;">
+              Get in Touch
+            </a>
+          </div>
+        `;
+      }
+
+      productsGrid.innerHTML = tilesHTML;
+    }
+
+    // Filter Buttons
+    filterPills.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterPills.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        renderProducts();
+      });
+    });
+
+    // Real-time Search
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderProducts();
+    });
+
+    // Render initially
+    renderProducts();
+  </script>
+</body>
 </html>
