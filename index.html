@@ -42,6 +42,11 @@
       padding: 0;
     }
 
+    html {
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text-main);
@@ -52,6 +57,9 @@
       position: relative;
       overflow-x: hidden;
       line-height: 1.6;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* Ambient dynamic glows */
@@ -207,13 +215,6 @@
       backdrop-filter: blur(8px);
     }
 
-    .social-btn:hover {
-      background: rgba(255, 255, 255, 0.09);
-      color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-    }
-
     .social-btn svg {
       width: 16px;
       height: 16px;
@@ -278,10 +279,6 @@
       cursor: pointer;
       transition: var(--transition);
       font-family: inherit;
-    }
-
-    .filter-btn:hover {
-      color: var(--text-main);
     }
 
     .filter-btn.active {
@@ -349,22 +346,11 @@
       box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
     }
 
-    .product-tile:hover {
-      transform: translateY(-6px);
-      border-color: var(--border-hover);
-      box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.65), 0 0 25px var(--primary-glow);
-    }
-
     /* Featured Tile Accent */
     .product-tile.is-featured {
       border-color: rgba(16, 185, 129, 0.35);
       background: linear-gradient(180deg, rgba(16, 185, 129, 0.06) 0%, rgba(18, 26, 43, 0.85) 100%);
       box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5), 0 0 25px rgba(16, 185, 129, 0.15);
-    }
-
-    .product-tile.is-featured:hover {
-      border-color: rgba(16, 185, 129, 0.6);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.25);
     }
 
     .product-tile::before {
@@ -381,10 +367,6 @@
 
     .product-tile.is-featured::before {
       background: linear-gradient(90deg, #10b981, #06b6d4);
-      opacity: 1;
-    }
-
-    .product-tile:hover::before {
       opacity: 1;
     }
 
@@ -412,10 +394,6 @@
       background: rgba(16, 185, 129, 0.12);
       border-color: rgba(16, 185, 129, 0.3);
       color: #34d399;
-    }
-
-    .product-tile:hover .tile-icon-box {
-      transform: scale(1.08);
     }
 
     .tile-icon-box svg {
@@ -526,22 +504,10 @@
       box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
     }
 
-    .tile-btn-live:hover {
-      filter: brightness(1.1);
-      box-shadow: 0 6px 22px rgba(16, 185, 129, 0.5);
-      transform: translateY(-2px);
-    }
-
     .tile-btn-primary {
       background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
       color: #ffffff;
       box-shadow: 0 4px 14px var(--primary-glow);
-    }
-
-    .tile-btn-primary:hover {
-      filter: brightness(1.1);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
-      transform: translateY(-2px);
     }
 
     .tile-btn-ghost {
@@ -557,12 +523,6 @@
       color: var(--text-muted);
       flex: 0 0 auto;
       padding: 0.75rem 0.9rem;
-    }
-
-    .tile-btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .tile-btn svg {
@@ -581,11 +541,6 @@
       justify-content: center;
       text-align: center;
       padding: 2.5rem 1.75rem;
-    }
-
-    .contact-tile:hover {
-      border-color: var(--primary-light);
-      background: rgba(15, 23, 42, 0.5);
     }
 
     .contact-icon {
@@ -628,26 +583,242 @@
       transition: var(--transition);
     }
 
-    footer a:hover {
-      color: var(--primary-light);
+    /* Mobile-first touch & hover separation */
+    @media (hover: hover) {
+      footer a:hover {
+        color: var(--primary-light);
+      }
+      .social-btn:hover {
+        background: rgba(255, 255, 255, 0.09);
+        color: var(--text-main);
+        border-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+      }
+
+      .filter-btn:hover {
+        color: var(--text-main);
+      }
+
+      .product-tile:hover {
+        transform: translateY(-6px);
+        border-color: var(--border-hover);
+        box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.65), 0 0 25px var(--primary-glow);
+      }
+
+      .product-tile.is-featured:hover {
+        border-color: rgba(16, 185, 129, 0.6);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(16, 185, 129, 0.25);
+      }
+
+      .product-tile:hover .tile-icon-box {
+        transform: scale(1.08);
+      }
+
+      .product-tile:hover::before {
+        opacity: 1;
+      }
+
+      .tile-btn-live:hover {
+        filter: brightness(1.1);
+        box-shadow: 0 6px 22px rgba(16, 185, 129, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .tile-btn-primary:hover {
+        filter: brightness(1.1);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+        transform: translateY(-2px);
+      }
+
+      .tile-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+
+      .contact-tile:hover {
+        border-color: var(--primary-light);
+        background: rgba(15, 23, 42, 0.5);
+      }
     }
 
+    /* Active touch feedback for mobile */
+    .social-btn:active,
+    .filter-btn:active,
+    .tile-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Mobile Devices (<= 640px) */
     @media (max-width: 640px) {
-      .hero-title {
-        font-size: 2.1rem;
-      }
       .container {
-        padding: 2rem 1rem 3rem;
+        padding: 2rem 1rem calc(3rem + env(safe-area-inset-bottom, 0px));
       }
-      .tiles-grid {
-        grid-template-columns: 1fr;
+
+      .hero {
+        margin-bottom: 2.25rem;
       }
+
+      .avatar {
+        width: 86px;
+        height: 86px;
+      }
+
+      .avatar-badge {
+        width: 18px;
+        height: 18px;
+      }
+
+      .hero-title {
+        font-size: clamp(1.85rem, 6.5vw, 2.25rem);
+        margin-bottom: 0.35rem;
+      }
+
+      .hero-tagline {
+        font-size: 0.975rem;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+        padding: 0 0.5rem;
+      }
+
+      .social-links {
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 380px;
+      }
+
+      .social-btn {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.8rem;
+        flex: 1 1 calc(50% - 0.5rem);
+        justify-content: center;
+        min-height: 42px;
+      }
+
+      .section-header {
+        margin-bottom: 1.75rem;
+        gap: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.45rem;
+      }
+
       .controls-bar {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
       }
+
+      .filter-pills {
+        display: flex;
+        width: 100%;
+        padding: 0.25rem;
+        gap: 0.25rem;
+      }
+
+      .filter-btn {
+        flex: 1;
+        padding: 0.5rem 0.35rem;
+        font-size: 0.775rem;
+        text-align: center;
+        white-space: nowrap;
+      }
+
       .search-wrap {
         max-width: 100%;
+        width: 100%;
+      }
+
+      /* Prevent iOS Safari auto-zoom on input focus (requires >= 16px font-size) */
+      .search-input {
+        font-size: 16px;
+        padding: 0.7rem 1rem 0.7rem 2.4rem;
+      }
+
+      .tiles-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .product-tile {
+        padding: 1.35rem 1.15rem;
+        border-radius: 16px;
+      }
+
+      .tile-header {
+        margin-bottom: 1rem;
+      }
+
+      .tile-icon-box {
+        width: 46px;
+        height: 46px;
+      }
+
+      .tile-icon-box svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .tile-title {
+        font-size: 1.225rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .tile-description {
+        font-size: 0.875rem;
+        line-height: 1.55;
+        margin-bottom: 1rem;
+      }
+
+      .tile-tags {
+        margin-bottom: 1.25rem;
+        gap: 0.35rem;
+      }
+
+      .tile-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .tile-actions {
+        gap: 0.6rem;
+      }
+
+      .tile-btn {
+        min-height: 44px;
+        font-size: 0.85rem;
+        padding: 0.7rem 1rem;
+      }
+
+      .tile-btn-secondary {
+        padding: 0.7rem 0.85rem;
+      }
+
+      footer {
+        padding: 2rem 1rem calc(2rem + env(safe-area-inset-bottom, 0px));
+        font-size: 0.825rem;
+      }
+    }
+
+    /* Small phones (iPhone SE, Galaxy Fold <= 380px) */
+    @media (max-width: 380px) {
+      .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+
+      .product-tile {
+        padding: 1.15rem 0.85rem;
+      }
+
+      .filter-btn {
+        font-size: 0.72rem;
+        padding: 0.45rem 0.2rem;
+      }
+
+      .hero-title {
+        font-size: 1.7rem;
       }
     }
   </style>
@@ -747,7 +918,7 @@
         featured: true,
         icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="15" rx="3"></rect><path d="M4 11h16"></path><circle cx="7.5" cy="14.5" r="1.5"></circle><circle cx="16.5" cy="14.5" r="1.5"></circle><path d="M6 18v2"></path><path d="M18 18v2"></path></svg>`,
         tags: ["Vue 3", "Leaflet", "TypeScript", "Vite", "Pinia"],
-        primaryUrl: "https://kpsafvan.github.io/kerala-stats/", 
+        primaryUrl: "https://kpsafvan.in/kerala-stats/", 
         primaryLabel: "Launch App",
         githubUrl: "https://github.com/kpsafvan/kerala-stats"
       },
