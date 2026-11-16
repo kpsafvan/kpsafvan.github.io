@@ -873,8 +873,8 @@
 
       <div class="controls-bar">
         <div class="filter-pills" id="filterPills">
-          <button class="filter-btn active" data-filter="all">All Products (2)</button>
-          <button class="filter-btn" data-filter="live">Live (1)</button>
+          <button class="filter-btn active" data-filter="all">All Products (3)</button>
+          <button class="filter-btn" data-filter="live">Live (2)</button>
           <button class="filter-btn" data-filter="in-dev">In Development (1)</button>
         </div>
 
@@ -905,10 +905,24 @@
   <script>
     // =========================================================================
     // PRODUCT REPOSITORY & CATALOG CONFIGURATION
-    // 1. KSRTC Transit Analytics (Live)
-    // 2. Class Photo Archive (In Development)
+    // 1. Dashboarder: Universal Analytics & Strava Intelligence (Live)
+    // 2. KSRTC Transit Analytics (Live)
+    // 3. Class Photo Archive (In Development)
     // =========================================================================
     const productsData = [
+      {
+        id: "dashboarder",
+        title: "Dashboarder",
+        description: "Privacy-first, zero-server analytics platform & Strava intelligence suite. Offers full Strava Premium parity (PMC curves, 52-week heatmaps, YoY metrics, GPS routes) and prompt-driven CSV dashboard generation.",
+        status: "live",
+        statusLabel: "Live Product",
+        featured: true,
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 14l4-4"></path><path d="M3.34 19a10 10 0 1 1 17.32 0"></path></svg>`,
+        tags: ["Vue 3", "TypeScript", "Apache ECharts", "Tailwind CSS", "Leaflet", "Pinia"],
+        primaryUrl: "https://kpsafvan.in/dashboarder/", 
+        primaryLabel: "Launch App",
+        githubUrl: "https://github.com/kpsafvan/dashboarder"
+      },
       {
         id: "kerala-stats",
         title: "KSRTC Kerala Transit Analytics",
@@ -936,6 +950,16 @@
         githubUrl: "https://github.com/kpsafvan"
       }
     ];
+
+    // Auto-update filter pill counts
+    const liveCount = productsData.filter(p => p.status === 'live').length;
+    const devCount = productsData.filter(p => p.status === 'in-dev').length;
+    const allBtn = document.querySelector('[data-filter="all"]');
+    const liveBtn = document.querySelector('[data-filter="live"]');
+    const devBtn = document.querySelector('[data-filter="in-dev"]');
+    if (allBtn) allBtn.textContent = `All Products (${productsData.length})`;
+    if (liveBtn) liveBtn.textContent = `Live (${liveCount})`;
+    if (devBtn) devBtn.textContent = `In Development (${devCount})`;
 
     // =========================================================================
     // DYNAMIC RENDERING & INTERACTION LOGIC

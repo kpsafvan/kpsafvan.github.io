@@ -5,7 +5,7 @@ Official personal landing page and product showcase for **K P Safvan** ([kpsafva
 ## 🚀 Features
 
 - **Tile / Button Format**: Bento-inspired responsive grid of product cards with interactive buttons, hover lift effects, and status indicators.
-- **Live Product Spotlight**: Dedicated featured styling and pulsing status dot for active hosted apps (e.g. **Kerala Transit Analytics**).
+- **Live Product Spotlight**: Dedicated featured styling and pulsing status dot for active hosted apps (e.g. **Dashboarder**, **Kerala Transit Analytics**).
 - **In Development Pipeline**: Cards for products currently in development with clear status tags.
 - **Instant Search & Category Filters**: Real-time filtering by status (`Live`, `In Development`) or search keywords.
 - **Zero Build Setup**: Pure HTML5, modern CSS3, and vanilla JavaScript. Deploys instantly via GitHub Pages.
